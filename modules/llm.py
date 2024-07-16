@@ -4,14 +4,6 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from enum import Enum
 import os
 
-from google.colab import drive
-
-drive.mount("/content/drive")
-# os.chdir("/content/drive/MyDrive/LLM")
-
-os.environ["HF_HOME"] = "/content/drive/MyDrive/cache"
-
-
 device = "cuda"  # the device to load the model onto
 
 extra_kwargs = {}
@@ -45,8 +37,7 @@ def load_model(model: MODEL = MODEL.glm_4_9b.value, extra_kwargs=extra_kwargs):
     return model, tokenizer
 
 
-def get_response(model: MODEL, tokenizer, context, question):
-    model, tokenizer = load_model(model)
+def get_response(model, tokenizer, context, question):
     prompt = prompt_template.format(context=context, question=question)
     messages = [
         {"role": "system", "content": "You are a helpful assistant."},
